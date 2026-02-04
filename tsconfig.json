@@ -7,7 +7,7 @@
     "strict": true,
     "moduleResolution": "Bundler",
     "skipLibCheck": true,
-    "types":[node]
+    "types":["node"]
   },
   "include": ["src"]
 }
