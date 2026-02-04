@@ -536,18 +536,26 @@ export default function App() {
               if (!phoneOk) return setFormError("Telefonnumret verkar för kort.");
 
               // Skicka in uppgifterna
-		const r = await fetch("/api/interest", {
-  			method: "POST",
-  			headers: { "Content-Type": "application/json" },
-  			body: JSON.stringify(form),
-		});
+		try {
+  			setFormError("");
 
-		if (!r.ok) {
-  			const data = await r.json().catch(() => ({}));
-  			return setFormError(data.error || "Kunde inte skicka. Försök igen.");
+  			const r = await fetch("/api/interest", {
+    				method: "POST",
+    				headers: { "Content-Type": "application/json" },
+    				body: JSON.stringify(form),
+  			});
+
+  		if (!r.ok) {
+    			const data = await r.json().catch(() => ({}));
+    			setFormError(data.error || "Kunde inte skicka. Försök igen.");
+    			return;
+  		}
+
+  		setSubmitted(true);
+			} catch (err) {
+  		setFormError("Nätverksfel. Försök igen.");
 		}
 
-		setSubmitted(true);
 
             }}
           >
