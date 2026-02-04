@@ -514,7 +514,7 @@ export default function App() {
         {!submitted ? (
           <form
             className="space-y-4"
-            onSubmit={(e) => {
+            onSubmit={async (e) => {
               e.preventDefault();
               setFormError("");
 
@@ -535,10 +535,20 @@ export default function App() {
               if (!emailOk) return setFormError("E-postadressen verkar inte korrekt.");
               if (!phoneOk) return setFormError("Telefonnumret verkar för kort.");
 
-              // Skicka in uppgifterna (pre-launch: ingen backend ännu)
-              // Här kan vi senare koppla på API / CRM / e-posttjänst
-              console.log("Intresseanmälan skickad:", form);
-              setSubmitted(true);
+              // Skicka in uppgifterna
+		const r = await fetch("/api/interest", {
+  			method: "POST",
+  			headers: { "Content-Type": "application/json" },
+  			body: JSON.stringify(form),
+		});
+
+		if (!r.ok) {
+  			const data = await r.json().catch(() => ({}));
+  			return setFormError(data.error || "Kunde inte skicka. Försök igen.");
+		}
+
+		setSubmitted(true);
+
             }}
           >
             <div>
