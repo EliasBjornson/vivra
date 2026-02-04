@@ -144,7 +144,7 @@ export default function App() {
               Pre‑launch
             </span>
             <p className="text-sm text-slate-200 leading-snug">
-              Vi har ännu inte öppnat verksamheten. Vi planerar att slå upp dörrarna <strong>kvartal 2, 2026</strong>.
+              Vi har ännu inte öppnat verksamheten. Vi planerar att slå upp dörrarna <strong>juni 2026</strong>.
               Vill du bli kontaktad så fort vi är igång?
             </p>
           </div>
@@ -236,10 +236,10 @@ export default function App() {
               },
               {
                 title: "2. Skanna hjärtat och lämna blodprov",
-                text: "Vi skannar ditt hjärta för att se om du har åderförkalkning (plack) i hjärtat eller inte. Vi tar blodprov för att se hur dina blodfetter ser ut.",
+                text: "Vi skannar ditt hjärta på någon av våra mottagningar i Göteborg, Stockholm eller Malmö för att se om du har åderförkalkning i hjärtat eller inte. Du får också lämna blodprov på valfri provtagningsenhet för att se hur dina blodfetter ser ut.",
               },
               {
-                title: "3. Möte med läkare för provsvar",
+                title: "3. Möte med läkare för provsvar - online eller på plats i Göteborg",
                 text: "Om du inte har åderförkalkning är det jättebra och då kommer vi i många fall inte rekommendera behandling. Om vi ser plack kommer vi att erbjuda dig att ingå i vårt preventionsprogram. Där får du rätt förebyggande behandling enligt dina mål och behov.",
               },
             ].map((s, i) => (
@@ -263,7 +263,7 @@ export default function App() {
             {[
               {
                 name: "Vivra Screening",
-                price: "3 990 kr",
+                price: "3 790 kr",
                 perks: [
                   "Hjärtskanning + blodprover",
                   "Medicinsk genomgång",
@@ -273,7 +273,7 @@ export default function App() {
               },
               {
                 name: "Vivra Preventionsprogram",
-                price: "249 kr/mån",
+                price: "279 kr/mån",
                 perks: [
                   "Initiering av förebyggande behandling",
                   "Tät uppföljning första månaderna",
@@ -621,7 +621,7 @@ export default function App() {
             </button>
 
             <p className="text-xs text-slate-400">
-              Obs: Detta är en demo. Koppla formuläret till e-post/CRM när ni vill.
+              Obs: vi slår upp portarna i juni 2026 men tar gladeligen emot intresseanmälningar! Vi kontaktar dig så fort vi är igång.
             </p>
           </form>
         ) : (
@@ -667,7 +667,7 @@ export default function App() {
                 <div className="mt-6 rounded-2xl border border-white/10 bg-slate-950/30 p-5">
                   <div className="text-sm font-semibold text-slate-100">Vårt huvudsakliga kriterium</div>
                   <p className="mt-2 text-slate-200 text-sm leading-relaxed">
-                    Vår grundfilosofi är ganska enkel: om vi ser <strong>plack i kranskärlen</strong> och man låter det bero är det stor risk att placken växer och 
+                    Vår grundfilosofi är ganska enkel: om vi ser <strong>plack i kranskärlen</strong> och man låter det bero är risken överhängande att placken växer och 
                     till slut brister och orsakar en hjärtinfarkt. Därför är det i regel befogat med preventiv behandling som kan bromsa eller stoppa plackutvecklingen. 
                     Behandling består framförallt av att sänka blodfetter, eftersom blodfetter är grundorsaken bakom plackbildning och åderförkalkning.
                   </p>
@@ -697,7 +697,7 @@ export default function App() {
                       },
                       {
                         title: "Om du vill ta det lugnare",
-                        text: "Vi kan börja stegvis och justera i takt med att du känner dig trygg.",
+                        text: "Vi kan börja stegvis och justera i takt med dina önskemål.",
                       },
                      
                     ].map((item, idx) => (
@@ -711,11 +711,11 @@ export default function App() {
 
                 <div className="rounded-3xl border border-white/15 bg-gradient-to-b from-white/10 to-white/5 p-6 sm:p-7">
                   <div className="text-sm font-semibold text-slate-100">Varför nu?</div>
-                  <p className="mt-6 text-slate-200 text-xs sm:text-base leading-relaxed">
-                    Under de senaste decennierna har forskningen tydligt visat att åderförkalkning är en långsam och mätbar sjukdomsprocess som börjar långt innan den ger symtom. I dag vet vi med hög säkerhet vad som orsakar sjukdomen: kolesterolbärande partiklar i blodet, särskilt apoB-innehållande lipoproteiner som LDL och triglyceridrikt kolesterol, driver åderförkalkning över tid. 
-                    Samtidigt har vi nu verktyg för att upptäcka sjukdomen tidigt. Med modern hjärt-CT kan även tyst, subklinisk åderförkalkning visualiseras direkt, långt innan den leder till hjärtinfarkt eller stroke. 
+                  <p className="mt-6 text-slate-200 text-sm sm:text-base leading-relaxed">
+                    Vi som är grundare av Vivra är forskare och läkare som dagligen jobbar med hjärt-kärlsjukdom. Idag vet vi att åderförkalkning är en långsam och mätbar sjukdomsprocess som börjar långt innan den ger symtom. Vi vet också grundorsaken bakom sjukdomen: kolesterolbärande partiklar i blodet, särskilt apoB-innehållande lipoproteiner (LDL, Lp(a) och TG-rika lipoproteiner), driver åderförkalkning över tid. 
+                    Samtidigt har vi nu också verktyg för att upptäcka sjukdomen tidigt. Med modern hjärt-CT/DT kan även tyst, subklinisk åderförkalkning visualiseras direkt, långt innan den leder till hjärtinfarkt.
                     Vi har också effektiva och säkra behandlingar. Statiner, ezetimib, PCSK9-hämmare och nya terapier kan kraftigt sänka de partiklar som orsakar sjukdomen, och stora kliniska studier visar att detta leder till färre hjärt-kärlhändelser. 
-                    När orsak, mätning och behandling nu finns på plats samtidigt kan vi för första gången gå från att reagera på hjärtinfarkter till att förebygga dem. Det är därför tiden är nu.
+                    När orsak, mätning och behandling nu finns på plats samtidigt kan vi gå från att reagera på hjärtinfarkter till att förebygga dem. Det är därför tiden är nu.
                   </p>
                 </div>
               </div>
