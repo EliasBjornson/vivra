@@ -332,7 +332,7 @@ export default function App() {
               <ul className="mt-4 space-y-2 text-slate-200 list-disc list-inside">
                 <li>Vi ser tidiga förändringar i kranskärlen (subklinisk ateroskleros).</li>
                 <li>
-                  Underhållsfas med förebyggande behandling. Pris: <strong>249 kr/månad</strong>.
+                  Underhållsfas med förebyggande behandling. Pris: <strong>279 kr/månad</strong>.
                 </li>
                 <li>Tät uppföljning första månaderna och årliga nya kontroller.</li>
               </ul>
@@ -469,7 +469,7 @@ export default function App() {
                 Nej. Om inga plack hittas och blodprover är bra räcker god livsstil och åter-skanning efter 3–5 år.</p>
             </div>
             <div>
-              <h4 className="font-medium text-slate-100">Vad ingår i 249 kr/mån?</h4>
+              <h4 className="font-medium text-slate-100">Vad ingår i 279 kr/mån?</h4>
               <p className="mt-2">
                 Uppföljning, recept, och samordning av förebyggande vård. Vi föreslår, du medbestämmer.</p>
             </div>
