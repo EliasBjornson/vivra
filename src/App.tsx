@@ -210,7 +210,7 @@ export default function App() {
 
           <div className="relative flex justify-center md:justify-end mt-6 md:mt-0">
             <motion.img
-              src="https://i.ibb.co/rfHMYrWg/Chat-GPT-Image-30-nov-2025-13-47-50.png"
+              src="https://ibb.co/vvPSY1dT/ChatGPT Image 7 feb. 2026 14_44_58.png"
               alt="Hjärta"
               className="w-72 sm:w-80 md:w-[28rem] object-contain drop-shadow-xl"
               style={{
