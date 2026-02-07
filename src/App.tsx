@@ -210,14 +210,14 @@ export default function App() {
 
           <div className="relative flex justify-center md:justify-end mt-6 md:mt-0">
             <motion.img
-              src="https://i.ibb.co/4gTHdWSX/Chat-GPT-Image-7-feb-2026-14-44-58.png"
+              src="https://ibb.co/vvC2D594"><img src="https://i.ibb.co/pr6CnDqj/Chat-GPT-Image-7-feb-2026-15-06-21.png"
               alt="Hjärta"
               className="w-72 sm:w-80 md:w-[28rem] object-contain drop-shadow-xl"
               style={{
                 maskImage: "radial-gradient(circle, black 1%, transparent 100%)",
                 WebkitMaskImage: "radial-gradient(circle, black 1%, transparent 100%)",
               }}
-              animate={{ opacity: [1, 0.85, 1], scale: [1, 0.985, 1] }}
+              animate={{ opacity: [1, 0.85, 1], scale: [1, 1, 1] }}
               transition={{ duration: 3.3, repeat: Infinity, repeatType: "loop", ease: "easeInOut" }}
             />
           </div>
