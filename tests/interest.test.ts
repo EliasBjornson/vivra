@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { createInterestHandler } from "../api/interest.ts";
 
-const valid = { name: "Testperson Vivra", birthDate: "1970-01-02", email: "test@example.com", phone: "+46701234567", consent: true };
+const valid = { name: "Testperson Vivra", personalNumber: "19700102-0000", email: "test@example.com", phone: "+46701234567", consent: true };
 async function request(body: unknown, send: any, method = "POST") {
   let status = 200;
   let result: any;
@@ -21,7 +21,7 @@ test("sends all contact fields to the confirmed mailbox", async () => {
   assert.equal(response.status, 200);
   assert.deepEqual(sent.to, ["info@vivrahealth.se"]);
   assert.equal(sent.replyTo, valid.email);
-  for (const value of [valid.name, valid.birthDate, valid.email, valid.phone, "Samtycke till kontakt: Ja"]) assert.ok(sent.text.includes(value));
+  for (const value of [valid.name, valid.personalNumber, valid.email, valid.phone, "Samtycke till kontakt: Ja"]) assert.ok(sent.text.includes(value));
 });
 test("provider rejection or exception never reports success", async () => {
   assert.equal((await request(valid, async () => ({ data: null, error: { message: "rejected" } }))).status, 502);
@@ -29,7 +29,7 @@ test("provider rejection or exception never reports success", async () => {
   assert.equal((await request(valid, async () => ({ data: null }))).status, 502);
 });
 test("invalid date, email, missing fields and consent do not send an email", async () => {
-  for (const body of [{...valid, birthDate: "1970-02-30"}, {...valid, birthDate: "2999-01-01"}, {...valid, email: "bad"}, {...valid, consent: false}, {...valid, phone: ""}, {...valid, name: ""}, null, "{broken"]) {
+  for (const body of [{...valid, personalNumber: "19700230-0000"}, {...valid, personalNumber: "29990101-0000"}, {...valid, personalNumber: "19700102"}, {...valid, email: "bad"}, {...valid, consent: false}, {...valid, phone: ""}, {...valid, name: ""}, null, "{broken"]) {
     assert.equal((await request(body, async () => { assert.fail("Should not send"); })).status, 400);
   }
 });
