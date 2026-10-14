@@ -49,17 +49,17 @@ export default function App() {
         <div className="section-shell">
           <div className="section-heading">
             <div><p className="eyebrow">Så fungerar det</p><h2>Tre steg till en tydligare bild av din hjärthälsa.</h2></div>
-            <p>Under pilotfasen vänder vi oss främst till dig i Göteborgsområdet. Börja med att registrera dig med BankID och fylla i vårt hälsoformulär – vi hjälper dig genom resten.</p>
+            <p>Under pilotfasen vänder vi oss främst till dig i Göteborgsområdet. Registrera dig med BankID och fyll i vårt hälsoformulär. Vi ringer upp dig kort därefter och hjälper dig genom nästa steg.</p>
           </div>
           <div className="steps-grid">
             <article className="step-card">
               <span className="step-number">Steg 1</span><h3>Registrera dig hos oss.</h3>
-              <p>Identifiera dig med BankID och svara på några frågor om kön, ålder, familjehistorik och symtom. Du registreras som patient hos Vivra och våra läkare granskar dina uppgifter inför nästa steg.</p>
+              <p>Identifiera dig med BankID och svara på några frågor om kön, ålder, familjehistorik och symtom. Vi ringer upp dig kort efter registreringen, välkomnar dig och förklarar hur blodprov och hjärtskanning går till. Tillsammans går vi igenom dina uppgifter och stämmer av att allt är klart inför eventuell remiss.</p>
               <a className="step-link" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
             </article>
             <article className="step-card featured-step">
               <span className="step-number">Steg 2</span><h3>Prover i din egen takt.</h3>
-              <p>Efter läkarens bedömning skickar vi vid behov remisser till blodprov och en skanning av hjärtat. Skanningen (hjärt-CT) mäter kalk i hjärtats blodkärl – ett tecken på åderförkalkning. Du genomför undersökningarna i din egen takt.</p>
+              <p>Efter vårt telefonsamtal och läkarens bedömning skickar vi vid behov remisser till blodprov och en skanning av hjärtat. Skanningen (hjärt-CT) mäter kalk i hjärtats blodkärl – ett tecken på åderförkalkning. Du genomför undersökningarna i din egen takt.</p>
               <div className="step-pills"><span>Blodprov</span><span>Hjärtskanning</span></div>
             </article>
             <article className="step-card">
@@ -80,7 +80,7 @@ export default function App() {
           <div className="contact-card registration-card">
             <span className="contact-label">Din första kontakt</span>
             <h3>Kom igång med BankID.</h3>
-            <p>Identifiera dig och ange dina kontaktuppgifter. Svara sedan på frågor om kön, ålder, familjehistorik och symtom. Våra läkare granskar dina svar inför eventuell remiss.</p>
+            <p>Identifiera dig och ange dina kontaktuppgifter. Svara sedan på frågor om kön, ålder, familjehistorik och symtom. Vi ringer upp dig kort därefter, går igenom dina svar och förklarar vad som händer härnäst. Innan vi skickar remisser stämmer vi av att allt är klart och att du känner dig trygg med nästa steg.</p>
             <a className="button button-dark registration-cta" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
             <p className="registration-note">Registreringen är kostnadsfri. Du väljer ingen besökstid och betalar inget i detta steg.</p>
             <div className="existing-patient">
@@ -114,8 +114,8 @@ export default function App() {
         <div className="section-shell faq-grid">
           <div><p className="eyebrow">Vanliga frågor</p><h2>Undrar du något?</h2></div>
           <div className="faq-list">
-            <details><summary>Hur kommer jag igång? <span>+</span></summary><p>Klicka på ”Registrera dig hos oss”, identifiera dig med BankID och fyll i vårt korta hälsoformulär. Du registreras som patient och våra läkare granskar uppgifterna inför nästa steg. När du är registrerad kan du logga in på ”Mina sidor”. Vi tar just nu emot pilotpatienter, främst i Göteborgsområdet.</p></details>
-            <details><summary>Hur bokar jag blodprov och skanning av hjärtat? <span>+</span></summary><p>När du har registrerat dig granskar våra läkare uppgifterna och bedömer vilka undersökningar som passar dig. Därefter skickar vi vid behov remisser och informerar om hur du går vidare. Du genomför blodprovet och skanningen av hjärtat i din egen takt.</p></details>
+            <details><summary>Hur kommer jag igång? <span>+</span></summary><p>Klicka på ”Registrera dig hos oss”, identifiera dig med BankID och fyll i vårt korta hälsoformulär. Vi ringer upp dig kort efter registreringen för att välkomna dig, förklara undersökningarna och gå igenom dina uppgifter innan vi skickar eventuella remisser. När du är registrerad kan du logga in på ”Mina sidor”. Vi tar just nu emot pilotpatienter, främst i Göteborgsområdet.</p></details>
+            <details><summary>Hur bokar jag blodprov och skanning av hjärtat? <span>+</span></summary><p>Efter registreringen ringer vi upp dig och förklarar hur blodprov och hjärtskanning (hjärt-CT) går till. Vi går igenom dina uppgifter, svarar på dina frågor och stämmer av att allt är klart inför eventuell remiss. Efter läkarens bedömning skickar vi vid behov remisser och informerar om hur du går vidare. Du genomför blodprovet och skanningen av hjärtat i din egen takt.</p></details>
             <details><summary>Var finns vi? <span>+</span></summary><p>Under pilotfasen vänder vi oss främst till dig som bor i Göteborgsområdet. Hjärtskanningen görs hos Evidia Annedal i Göteborg. Blodprov lämnas genom SYNLAB och deras provtagningspartners; vi hjälper dig att hitta ett lämpligt provtagningsställe. Vår egen mottagning finns på GoCo Health Innovation City, Entreprenörsstråket 1c, 3 tr, i Mölndal. Genomgången av dina provsvar kan också ske via video.</p><p>Vi planerar att snart utöka till Stockholm, Malmö och Uppsala, och hoppas därefter kunna erbjuda hjärtskanning på ännu fler orter. Blodprov kan redan lämnas på många platser runt om i Sverige. Hör gärna av dig om du är intresserad av Vivra på din ort.</p></details>
             <details><summary>Vilka prover och mätningar gör ni? <span>+</span></summary>
               <p>Vi mäter blodfetter och långtidsblodsocker med blodprov och kontrollerar ditt blodtryck. De ger olika pusselbitar som hjälper oss att bedöma din hjärt-kärlhälsa och välja förebyggande åtgärder som passar dig.</p>
