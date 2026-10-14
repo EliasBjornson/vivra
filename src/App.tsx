@@ -1,8 +1,75 @@
-import React from "react";
+import React, { useEffect, useRef, useState, type FormEvent } from "react";
 const Arrow = () => <span aria-hidden="true">→</span>;
 const REGISTRATION_URL = "https://vivrahealth.curoflow.se/visits?bt=6acf8138a36ea18b24f9ea46";
 const PATIENT_PORTAL_URL = "https://vivrahealth.curoflow.se/auth/login";
 const LogoMark = () => <span className="logo-mark"><img src="/vivra-logo.png" alt="" width={490} height={345} /></span>;
+
+function RegistrationFallback() {
+  const details = useRef<HTMLDetailsElement>(null);
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  const [error, setError] = useState("");
+  useEffect(() => {
+    const openFallback = () => {
+      if (window.location.hash === "#kontakt-alternativ" && details.current) details.current.open = true;
+    };
+    openFallback();
+    window.addEventListener("hashchange", openFallback);
+    return () => window.removeEventListener("hashchange", openFallback);
+  }, []);
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (status === "sending") return;
+    const form = event.currentTarget;
+    const fields = new FormData(form);
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 20000);
+    setStatus("sending");
+    try {
+      const response = await fetch("/api/interest", {
+        method: "POST", headers: { "Content-Type": "application/json" }, signal: controller.signal,
+        body: JSON.stringify({
+          name: fields.get("Namn"), personalNumber: fields.get("Personnummer"),
+          email: fields.get("E-post"), phone: fields.get("Telefon"),
+          consent: fields.get("Samtycke") === "Ja", website: fields.get("_honey")
+        })
+      });
+      const result = await response.json();
+      if (!response.ok || result.ok !== true) {
+        setError(response.status === 400 ? "Kontrollera personnummer och kontaktuppgifter och försök igen." : "Det gick inte att skicka just nu. Försök igen eller kontakta oss på info@vivrahealth.se.");
+        setStatus("error");
+        return;
+      }
+      form.reset();
+      setStatus("success");
+    } catch {
+      setError("Vi kunde inte bekräfta att dina uppgifter kom fram. Försök igen eller kontakta oss på info@vivrahealth.se.");
+      setStatus("error");
+    } finally { window.clearTimeout(timeout); }
+  }
+  return (
+    <details ref={details} className="registration-fallback" id="kontakt-alternativ">
+      <summary>Fungerar inte registreringen? Klicka här.</summary>
+      <div className="fallback-content">
+        <h4>Vi hjälper dig att komma igång.</h4>
+        <p>Lämna dina uppgifter så ringer vi upp dig kort därefter och hjälper dig med registreringen. Formuläret skickas till info@vivrahealth.se och skapar inte automatiskt ett patientkonto.</p>
+        {status === "success" ? <p className="form-status" role="status">Tack! Dina uppgifter har skickats till Vivra. Vi ringer upp dig så snart vi kan och hjälper dig med nästa steg.</p> :
+        <form className="callback-form" onSubmit={submit} aria-busy={status === "sending"}>
+          <div className="callback-fields">
+            <label htmlFor="callback-name">Namn<input id="callback-name" type="text" name="Namn" autoComplete="name" required maxLength={150} /></label>
+            <label htmlFor="callback-pnr">Personnummer<input id="callback-pnr" type="text" name="Personnummer" inputMode="numeric" autoComplete="off" placeholder="ÅÅÅÅMMDD-XXXX" pattern="[0-9]{8}-?[0-9]{4}" maxLength={13} required aria-describedby="pnr-hint" /><span id="pnr-hint" className="field-hint">12 siffror, med eller utan bindestreck.</span></label>
+            <label htmlFor="callback-email">E-post<input id="callback-email" type="email" name="E-post" autoComplete="email" required maxLength={254} /></label>
+            <label htmlFor="callback-phone">Telefonnummer<input id="callback-phone" type="tel" name="Telefon" autoComplete="tel" required minLength={6} maxLength={30} /></label>
+          </div>
+          <div className="form-honeypot" aria-hidden="true"><label>Webbplats<input name="_honey" tabIndex={-1} autoComplete="off" /></label></div>
+          <label className="consent-field"><input type="checkbox" name="Samtycke" value="Ja" required /><span>Jag samtycker till att Vivra använder mina uppgifter för att kontakta mig och hjälpa mig med registreringen.</span></label>
+          <button className="button button-dark callback-button" type="submit" disabled={status === "sending"}>{status === "sending" ? "Skickar…" : "Skicka mina uppgifter"}</button>
+          {status === "error" && <p className="form-status" role="alert">{error}</p>}
+        </form>}
+      </div>
+    </details>
+  );
+}
+
 export default function App() {
   return (
     <main>
@@ -53,6 +120,7 @@ export default function App() {
               <span className="step-number">Steg 1</span><h3>Registrera dig hos oss.</h3>
               <p>Identifiera dig med BankID och svara på några frågor om kön, ålder, familjehistorik och symtom. Vi ringer upp dig kort efter registreringen, välkomnar dig och förklarar hur blodprov och hjärtskanning går till. Tillsammans går vi igenom dina uppgifter och stämmer av att allt är klart inför eventuell remiss.</p>
               <a className="step-link" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
+              <a className="fallback-link" href="#kontakt-alternativ">Fungerar inte registreringen? Klicka här.</a>
             </article>
             <article className="step-card featured-step">
               <span className="step-number">Steg 2</span><h3>Prover i din egen takt.</h3>
@@ -80,6 +148,7 @@ export default function App() {
             <p>Identifiera dig och ange dina kontaktuppgifter. Svara sedan på frågor om kön, ålder, familjehistorik och symtom. Vi ringer upp dig kort därefter, går igenom dina svar och förklarar vad som händer härnäst. Innan vi skickar remisser stämmer vi av att allt är klart och att du känner dig trygg med nästa steg.</p>
             <a className="button button-dark registration-cta" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
             <p className="registration-note">Registreringen är kostnadsfri. Du väljer ingen besökstid och betalar inget i detta steg.</p>
+            <RegistrationFallback />
             <div className="existing-patient">
               <p>Redan patient hos Vivra?</p>
               <a className="step-link" href={PATIENT_PORTAL_URL}>Logga in på Mina sidor <Arrow /></a>
@@ -174,3 +243,4 @@ export default function App() {
     </main>
   );
 }
+

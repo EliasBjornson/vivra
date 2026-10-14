@@ -356,3 +356,13 @@ main {
   .header-actions .portal-button { min-height: 42px; padding: 0 14px; font-size: 13px; }
   .hero-inner { padding-top: 140px; }
 }
+
+.registration-fallback { margin: 22px 0; border-top: 1px solid rgba(22,48,48,.15); padding-top: 18px; }
+.registration-fallback summary, .fallback-link { color: #275c54; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.fallback-link { display: block; margin-top: 16px; }
+.registration-fallback summary:focus-visible, .fallback-link:focus-visible { outline: 2px solid #275c54; outline-offset: 5px; }
+.fallback-content { margin-top: 22px; }
+.fallback-content h4 { font-size: 21px; margin: 0 0 12px; }
+.fallback-content > p { font-size: 14px; }
+.callback-button:disabled { opacity: .65; cursor: wait; }
+
