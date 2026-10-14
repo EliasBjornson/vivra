@@ -340,3 +340,19 @@ main {
 .callback-button:disabled { cursor: wait; opacity: .7; transform: none; }
 .form-status:not(:empty) { margin-top: 18px; font-size: 14px; line-height: 1.6; }
 .form-status a { text-decoration: underline; text-underline-offset: 3px; }
+
+/* Patient registration and portal entry points */
+.header-actions { justify-self: end; display: flex; align-items: center; gap: 10px; }
+.header-actions .portal-button { white-space: nowrap; padding: 0 16px; }
+.registration-button { background: #fffaf6; color: #3b2019; border-color: #fffaf6; }
+.registration-button:hover { background: #ffe5aa; }
+.registration-cta { width: 100%; margin: 24px 0 16px; }
+.registration-card .registration-note { font-size: 13px; }
+.existing-patient { margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
+.existing-patient p { margin-bottom: 12px; font-size: 14px; color: var(--muted); }
+@media (max-width: 760px) {
+  .site-header { height: 140px; display: flex; flex-wrap: wrap; align-content: center; gap: 12px; padding: 12px 0; }
+  .header-actions { width: 100%; justify-content: space-between; gap: 8px; }
+  .header-actions .portal-button { min-height: 42px; padding: 0 14px; font-size: 13px; }
+  .hero-inner { padding-top: 140px; }
+}

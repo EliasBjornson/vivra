@@ -1,42 +1,9 @@
-import React, { useState } from "react";
-import type { FormEvent } from "react";
+import React from "react";
 const Arrow = () => <span aria-hidden="true">→</span>;
-const FORM_URL = "#formular";
+const REGISTRATION_URL = "https://vivrahealth.curoflow.se/visits?bt=6acf8138a36ea18b24f9ea46";
+const PATIENT_PORTAL_URL = "https://vivrahealth.curoflow.se/auth/login";
 const LogoMark = () => <span className="logo-mark"><img src="/vivra-logo.png" alt="" width={490} height={345} /></span>;
 export default function App() {
-  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
-  async function submitContact(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    if (status === "sending") return;
-    const form = event.currentTarget;
-    const fields = new FormData(form);
-    setStatus("sending");
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 20000);
-    try {
-      const response = await fetch("/api/interest", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        signal: controller.signal,
-        body: JSON.stringify({
-          name: fields.get("Namn"),
-          personalNumber: fields.get("Personnummer"),
-          email: fields.get("E-post"),
-          phone: fields.get("Telefon"),
-          consent: fields.get("Samtycke") === "Ja",
-          website: fields.get("_honey"),
-        }),
-      });
-      const result = await response.json();
-      if (!response.ok || result.ok !== true) throw new Error("Submission failed");
-      form.reset();
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    } finally {
-      window.clearTimeout(timeout);
-    }
-  }
   return (
     <main>
       <header className="site-header">
@@ -44,7 +11,10 @@ export default function App() {
         <nav className="nav-links" aria-label="Huvudmeny">
           <a href="#sa-fungerar-det">Så fungerar det</a><a href="#priser">Priser</a><a href="#faq">Vanliga frågor</a><a href="#om-oss">Om oss</a>
         </nav>
-        <a className="portal-button" href={FORM_URL}>Bli uppringd</a>
+        <div className="header-actions">
+          <a className="portal-button" href={PATIENT_PORTAL_URL}>Mina sidor</a>
+          <a className="portal-button registration-button" href={REGISTRATION_URL}>Registrera dig hos oss</a>
+        </div>
       </header>
       <section className="hero" id="top">
         <div className="hero-glow hero-glow-one" />
@@ -64,8 +34,8 @@ export default function App() {
             </p>
             <p className="pilot-notice">Just nu tar vi emot pilotpatienter, främst i Göteborgsområdet.</p>
             <div className="hero-actions">
-              <a className="button button-light" href={FORM_URL}>
-                Lämna dina kontaktuppgifter
+              <a className="button button-light" href={REGISTRATION_URL}>
+                Registrera dig hos oss
               </a>
               <a className="button button-light" href="#sa-fungerar-det">
                 Så fungerar Vivra
@@ -79,17 +49,17 @@ export default function App() {
         <div className="section-shell">
           <div className="section-heading">
             <div><p className="eyebrow">Så fungerar det</p><h2>Tre steg till en tydligare bild av din hjärthälsa.</h2></div>
-            <p>Under pilotfasen vänder vi oss främst till dig i Göteborgsområdet. Allt börjar med ett telefonsamtal – vi hjälper dig genom resten.</p>
+            <p>Under pilotfasen vänder vi oss främst till dig i Göteborgsområdet. Börja med att registrera dig med BankID och fylla i vårt hälsoformulär – vi hjälper dig genom resten.</p>
           </div>
           <div className="steps-grid">
             <article className="step-card">
-              <span className="step-number">Steg 1</span><h3>Vi ringer dig.</h3>
-              <p>Lämna ditt namn, telefonnummer och e-post. Vi ringer upp, ställer några enkla frågor och berättar hur allt går till.</p>
-              <a className="step-link" href={FORM_URL}>Lämna dina kontaktuppgifter <Arrow /></a>
+              <span className="step-number">Steg 1</span><h3>Registrera dig hos oss.</h3>
+              <p>Identifiera dig med BankID och svara på några frågor om kön, ålder, familjehistorik och symtom. Du registreras som patient hos Vivra och våra läkare granskar dina uppgifter inför nästa steg.</p>
+              <a className="step-link" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
             </article>
             <article className="step-card featured-step">
               <span className="step-number">Steg 2</span><h3>Prover i din egen takt.</h3>
-              <p>Efter samtalet skickar vi remisser till blodprov och en skanning av hjärtat. Skanningen (hjärt-CT) mäter kalk i hjärtats blodkärl – ett tecken på åderförkalkning. Du genomför undersökningarna i din egen takt.</p>
+              <p>Efter läkarens bedömning skickar vi vid behov remisser till blodprov och en skanning av hjärtat. Skanningen (hjärt-CT) mäter kalk i hjärtats blodkärl – ett tecken på åderförkalkning. Du genomför undersökningarna i din egen takt.</p>
               <div className="step-pills"><span>Blodprov</span><span>Hjärtskanning</span></div>
             </article>
             <article className="step-card">
@@ -104,57 +74,20 @@ export default function App() {
         <div className="section-shell contact-inner pilot-contact-grid">
           <div className="contact-heading">
             <p className="eyebrow light">Välkommen som pilotpatient i Göteborgsområdet</p>
-            <h2>Första steget?<br />Vi hörs.</h2>
-            <p>Lämna dina kontaktuppgifter så ringer vi dig och berättar mer om kartläggningen.</p>
-
+            <h2>Första steget?<br />Registrera dig.</h2>
+            <p>Vår förebyggande screening vänder sig till dig utan symtom på hjärt-kärlsjukdom. Börja med en registrering och ett kort hälsoformulär i vår patientportal.</p>
           </div>
-            <form
-              className="contact-card callback-form"
-              onSubmit={submitContact}
-              aria-busy={status === "sending"}
-            >
-              <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" />
-
-              <span className="contact-label">Din första kontakt</span>
-              <h3>Vi hör av oss till dig.</h3>
-              <p>
-                Lämna namn, personnummer, telefonnummer och e-post så ringer vi dig för
-                ett första samtal.
-              </p>
-
-              <label htmlFor="callback-name">Namn</label>
-              <input id="callback-name" name="Namn" type="text" autoComplete="name" required />
-
-              <label htmlFor="callback-birthdate">Personnummer</label>
-              <input id="callback-birthdate" name="Personnummer" type="text" inputMode="numeric" autoComplete="off" placeholder="ÅÅÅÅMMDD-XXXX" pattern="[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])-?[0-9]{4}" minLength={12} maxLength={13} title="Ange födelsedatum och fyra sista siffror, till exempel ÅÅÅÅMMDD-XXXX." aria-describedby="callback-birthdate-hint" required />
-              <p id="callback-birthdate-hint" className="field-hint">Födelsedatum med fyra sista siffror: ÅÅÅÅMMDD-XXXX.</p>
-
-              <div className="callback-fields">
-                <div>
-                  <label htmlFor="callback-email">Mejladress</label>
-                  <input id="callback-email" name="E-post" type="email" autoComplete="email" required />
-                </div>
-                <div>
-                  <label htmlFor="callback-phone">Telefonnummer</label>
-                  <input id="callback-phone" name="Telefon" type="tel" autoComplete="tel" required />
-                </div>
-              </div>
-
-              <label className="consent-field">
-                <input name="Samtycke" type="checkbox" value="Ja" required />
-                <span>Jag samtycker till att Vivra kontaktar mig.</span>
-              </label>
-              <p className="privacy-note">
-                Skriv inte känsliga medicinska uppgifter i detta formulär.
-              </p>
-              <button className="button callback-button" type="submit" disabled={status === "sending"}>
-                {status === "sending" ? "Skickar…" : "Ring upp mig"} <Arrow />
-              </button>
-              <div className="form-status" aria-live="polite" aria-atomic="true">
-                {status === "success" && <p>Tack! Vi har fått dina uppgifter och hör av oss till dig.</p>}
-                {status === "error" && <p>Det gick inte att skicka dina uppgifter. Försök igen eller kontakta oss på <a href="mailto:info@vivrahealth.se">info@vivrahealth.se</a>.</p>}
-              </div>
-            </form>
+          <div className="contact-card registration-card">
+            <span className="contact-label">Din första kontakt</span>
+            <h3>Kom igång med BankID.</h3>
+            <p>Identifiera dig och ange dina kontaktuppgifter. Svara sedan på frågor om kön, ålder, familjehistorik och symtom. Våra läkare granskar dina svar inför eventuell remiss.</p>
+            <a className="button button-dark registration-cta" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
+            <p className="registration-note">Registreringen är kostnadsfri. Du väljer ingen besökstid och betalar inget i detta steg.</p>
+            <div className="existing-patient">
+              <p>Redan patient hos Vivra?</p>
+              <a className="step-link" href={PATIENT_PORTAL_URL}>Logga in på Mina sidor <Arrow /></a>
+            </div>
+          </div>
         </div>
       </section>
       <section className="services-section" id="priser">
@@ -165,7 +98,7 @@ export default function App() {
               <div className="service-card-head"><div><span className="service-tag">En engångskostnad</span><h3>Vivra Screening</h3></div><div className="price"><strong>3 290</strong><span>kr</span></div></div>
               <p className="service-lead">En samlad bild av din hjärt-kärlhälsa och en personlig rekommendation.</p>
               <ul><li>Blodprover</li><li>Hjärtskanning</li><li>Genomgång av alla provsvar med läkare</li><li>Möte i Mölndal eller via video</li></ul>
-              <a className="button button-dark" href={FORM_URL}>Lämna dina kontaktuppgifter <Arrow /></a>
+              <a className="button button-dark" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
             </article>
             <article className="service-card prevention-card">
               <div className="service-card-head"><div><span className="service-tag">Efter medicinsk bedömning</span><h3>Vivra Prevention</h3></div><div className="price"><strong>199</strong><span>kr/mån</span></div></div>
@@ -181,8 +114,8 @@ export default function App() {
         <div className="section-shell faq-grid">
           <div><p className="eyebrow">Vanliga frågor</p><h2>Undrar du något?</h2></div>
           <div className="faq-list">
-            <details><summary>Hur kommer jag igång? <span>+</span></summary><p>Lämna ditt namn, telefonnummer och e-post i formuläret. Vi ringer dig, ställer några enkla frågor och berättar hur undersökningarna och uppföljningen går till. Vi tar just nu emot pilotpatienter, främst i Göteborgsområdet.</p></details>
-            <details><summary>Hur bokar jag blodprov och skanning av hjärtat? <span>+</span></summary><p>Vi skickar remisser efter vårt första telefonsamtal och informerar om hur du går vidare. Du genomför blodprovet och skanningen av hjärtat i din egen takt.</p></details>
+            <details><summary>Hur kommer jag igång? <span>+</span></summary><p>Klicka på ”Registrera dig hos oss”, identifiera dig med BankID och fyll i vårt korta hälsoformulär. Du registreras som patient och våra läkare granskar uppgifterna inför nästa steg. När du är registrerad kan du logga in på ”Mina sidor”. Vi tar just nu emot pilotpatienter, främst i Göteborgsområdet.</p></details>
+            <details><summary>Hur bokar jag blodprov och skanning av hjärtat? <span>+</span></summary><p>När du har registrerat dig granskar våra läkare uppgifterna och bedömer vilka undersökningar som passar dig. Därefter skickar vi vid behov remisser och informerar om hur du går vidare. Du genomför blodprovet och skanningen av hjärtat i din egen takt.</p></details>
             <details><summary>Var finns vi? <span>+</span></summary><p>Under pilotfasen vänder vi oss främst till dig som bor i Göteborgsområdet. Hjärtskanningen görs hos Evidia Annedal i Göteborg. Blodprov lämnas genom SYNLAB och deras provtagningspartners; vi hjälper dig att hitta ett lämpligt provtagningsställe. Vår egen mottagning finns på GoCo Health Innovation City, Entreprenörsstråket 1c, 3 tr, i Mölndal. Genomgången av dina provsvar kan också ske via video.</p><p>Vi planerar att snart utöka till Stockholm, Malmö och Uppsala, och hoppas därefter kunna erbjuda hjärtskanning på ännu fler orter. Blodprov kan redan lämnas på många platser runt om i Sverige. Hör gärna av dig om du är intresserad av Vivra på din ort.</p></details>
             <details><summary>Vilka prover och mätningar gör ni? <span>+</span></summary>
               <p>Vi mäter blodfetter och långtidsblodsocker med blodprov och kontrollerar ditt blodtryck. De ger olika pusselbitar som hjälper oss att bedöma din hjärt-kärlhälsa och välja förebyggande åtgärder som passar dig.</p>
@@ -196,7 +129,7 @@ export default function App() {
             <details><summary>Vad är en skanning av hjärtat? <span>+</span></summary><p>Det är en röntgenundersökning av hjärtats kranskärl som visar om det finns kalkinlagringar – ett tecken på åderförkalkning. Undersökningen är enkel och snabb, görs med låg stråldos och bidrar med viktig information i vår bedömning.</p></details>
             <details><summary>Måste jag komma till Mölndal? <span>+</span></summary><p>Nej. Genomgången av dina provsvar kan ske i våra lokaler i Mölndal eller via videomöte. Du väljer det som passar dig bäst.</p></details>
             <details><summary>Behöver jag gå med i preventionsprogrammet? <span>+</span></summary><p>Vi behandlar inte i onödan. Om du har påvisbar åderförkalkning eller uppfyller våra andra fördefinierade behandlingskriterier så kommer vi erbjuda dig behandling. Om allt ser bra ut så kommer vi i regel inte rekommendera behandling till dig.</p><p>Även om du inte behöver behandling nu finns vi kvar. Vi håller kostnadsfritt reda på när det är dags för en ny undersökning och kontaktar dig då – vanligtvis efter 3–4 år. Påminnelsen är en gratis service. Vid nästa undersökning ser vi om allt fortfarande ser bra ut eller om du behöver förebyggande behandling.</p></details>
-            <details><summary>Behöver alla göra en skanning av hjärtat? <span>+</span></summary><p>Behovet bedöms individuellt utifrån bland annat ålder och risk för hjärt-kärlsjukdom. Vi går igenom vad som passar dig under det första samtalet.</p></details>
+            <details><summary>Behöver alla göra en skanning av hjärtat? <span>+</span></summary><p>Behovet bedöms individuellt utifrån bland annat ålder och risk för hjärt-kärlsjukdom. Våra läkare granskar uppgifterna i ditt hälsoformulär och bedömer vad som passar dig.</p></details>
             <details><summary>Måste jag ha symtom? <span>+</span></summary><p>Nej. Vivra arbetar med att bedöma och minska risk innan hjärt-kärlsjukdom ger symtom. Vid akuta bröstsmärtor eller andra akuta symtom ska du ringa 112.</p></details>
           </div>
         </div>
