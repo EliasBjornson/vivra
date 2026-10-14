@@ -22,11 +22,13 @@ export function createInterestHandler(sendEmail: SendEmail) {
     if (body.website) return res.status(200).json({ ok: true });
     const stringField = (key: string) => typeof body[key] === "string" ? body[key].trim() : "";
     const name = stringField("name");
-    const birthDate = stringField("birthDate");
+    const personalNumber = stringField("personalNumber");
+    const digits = personalNumber.replace("-", "");
+    const birthDate = `${digits.slice(0,4)}-${digits.slice(4,6)}-${digits.slice(6,8)}`;
     const email = stringField("email");
     const phone = stringField("phone");
     const parsedDate = new Date(birthDate + "T00:00:00Z");
-    const validDate = /^\d{4}-\d{2}-\d{2}$/.test(birthDate) &&
+    const validDate = /^\d{8}-?\d{4}$/.test(personalNumber) &&
       !Number.isNaN(parsedDate.getTime()) && parsedDate.toISOString().slice(0, 10) === birthDate &&
       birthDate <= new Date().toISOString().slice(0, 10) && birthDate >= "1900-01-01";
     if (!name || name.length > 150 || !validDate ||
@@ -42,7 +44,7 @@ export function createInterestHandler(sendEmail: SendEmail) {
         subject: "Ny begäran om återuppringning från Vivra",
         text: [
           "Ny begäran om återuppringning från vivrahealth.se", "",
-          `Namn: ${name}`, `Födelsedatum: ${birthDate}`,
+          `Namn: ${name}`, `Personnummer: ${digits.slice(0,8)}-${digits.slice(8)}`,
           `E-post: ${email}`, `Telefon: ${phone}`,
           "Samtycke till kontakt: Ja",
         ].join("\n"),
