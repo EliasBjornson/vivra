@@ -34,9 +34,6 @@ export default function App() {
             </p>
             <p className="pilot-notice">Just nu tar vi emot pilotpatienter, främst i Göteborgsområdet.</p>
             <div className="hero-actions">
-              <a className="button button-light" href={REGISTRATION_URL}>
-                Registrera dig hos oss
-              </a>
               <a className="button button-light" href="#sa-fungerar-det">
                 Så fungerar Vivra
               </a>
