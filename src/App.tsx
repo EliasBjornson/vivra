@@ -20,7 +20,7 @@ export default function App() {
         signal: controller.signal,
         body: JSON.stringify({
           name: fields.get("Namn"),
-          birthDate: fields.get("Födelsedatum"),
+          personalNumber: fields.get("Personnummer"),
           email: fields.get("E-post"),
           phone: fields.get("Telefon"),
           consent: fields.get("Samtycke") === "Ja",
@@ -42,7 +42,7 @@ export default function App() {
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Vivra, startsida"><LogoMark /><span className="brand-name">Vivra</span></a>
         <nav className="nav-links" aria-label="Huvudmeny">
-          <a href="#sa-fungerar-det">Så fungerar det</a><a href="#priser">Priser</a><a href="#faq">Vanliga frågor</a>
+          <a href="#sa-fungerar-det">Så fungerar det</a><a href="#priser">Priser</a><a href="#faq">Vanliga frågor</a><a href="#om-oss">Om oss</a>
         </nav>
         <a className="portal-button" href={FORM_URL}>Bli uppringd</a>
       </header>
@@ -118,16 +118,16 @@ export default function App() {
               <span className="contact-label">Din första kontakt</span>
               <h3>Vi hör av oss till dig.</h3>
               <p>
-                Lämna namn, födelsedatum, telefonnummer och e-post så ringer vi dig för
+                Lämna namn, personnummer, telefonnummer och e-post så ringer vi dig för
                 ett första samtal.
               </p>
 
               <label htmlFor="callback-name">Namn</label>
               <input id="callback-name" name="Namn" type="text" autoComplete="name" required />
 
-              <label htmlFor="callback-birthdate">Födelsedatum</label>
-              <input id="callback-birthdate" name="Födelsedatum" type="date" autoComplete="bday" min="1900-01-01" max={new Date().toISOString().slice(0, 10)} aria-describedby="callback-birthdate-hint" required />
-              <p id="callback-birthdate-hint" className="field-hint">År, månad och dag – inga fyra sista siffror.</p>
+              <label htmlFor="callback-birthdate">Personnummer</label>
+              <input id="callback-birthdate" name="Personnummer" type="text" inputMode="numeric" autoComplete="off" placeholder="ÅÅÅÅMMDD-XXXX" pattern="[0-9]{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])-?[0-9]{4}" minLength={12} maxLength={13} title="Ange födelsedatum och fyra sista siffror, till exempel ÅÅÅÅMMDD-XXXX." aria-describedby="callback-birthdate-hint" required />
+              <p id="callback-birthdate-hint" className="field-hint">Födelsedatum med fyra sista siffror: ÅÅÅÅMMDD-XXXX.</p>
 
               <div className="callback-fields">
                 <div>
@@ -184,11 +184,46 @@ export default function App() {
             <details><summary>Hur kommer jag igång? <span>+</span></summary><p>Lämna ditt namn, telefonnummer och e-post i formuläret. Vi ringer dig, ställer några enkla frågor och berättar hur undersökningarna och uppföljningen går till. Vi tar just nu emot pilotpatienter, främst i Göteborgsområdet.</p></details>
             <details><summary>Hur bokar jag blodprov och skanning av hjärtat? <span>+</span></summary><p>Vi skickar remisser efter vårt första telefonsamtal och informerar om hur du går vidare. Du genomför blodprovet och skanningen av hjärtat i din egen takt.</p></details>
             <details><summary>Var finns vi? <span>+</span></summary><p>Under pilotfasen vänder vi oss främst till dig som bor i Göteborgsområdet. Hjärtskanningen görs hos Evidia Annedal i Göteborg. Blodprov lämnas genom SYNLAB och deras provtagningspartners; vi hjälper dig att hitta ett lämpligt provtagningsställe. Vår egen mottagning finns på GoCo Health Innovation City, Entreprenörsstråket 1c, 3 tr, i Mölndal. Genomgången av dina provsvar kan också ske via video.</p><p>Vi planerar att snart utöka till Stockholm, Malmö och Uppsala, och hoppas därefter kunna erbjuda hjärtskanning på ännu fler orter. Blodprov kan redan lämnas på många platser runt om i Sverige. Hör gärna av dig om du är intresserad av Vivra på din ort.</p></details>
+            <details><summary>Vilka prover och mätningar gör ni? <span>+</span></summary>
+              <p>Vi mäter blodfetter och långtidsblodsocker med blodprov och kontrollerar ditt blodtryck. De ger olika pusselbitar som hjälper oss att bedöma din hjärt-kärlhälsa och välja förebyggande åtgärder som passar dig.</p>
+              <p><strong>LDL-kolesterol och apoB:</strong> LDL-kolesterol visar hur mycket kolesterol som finns i LDL-partiklarna. Dessa partiklar kan fastna i kärlväggen och bidra till åderförkalkning. Apolipoprotein B (apoB) ger ett mått på det totala antalet blodfettspartiklar som kan bidra till åderförkalkning. Tillsammans ger proverna en mer komplett bild än LDL-kolesterol ensamt och hjälper oss att sätta relevanta behandlingsmål.</p>
+              <p><strong>Lipoprotein(a), Lp(a):</strong> Lp(a) är en kolesterolbärande partikel som liknar LDL men har ett extra protein kopplat till sig. Nivån är till stor del ärftlig och påverkas vanligtvis ganska lite av kost och motion. Ett högt värde kan öka risken för hjärt-kärlsjukdom även om LDL-kolesterolet är normalt. Därför mäter vi Lp(a) separat och tar hänsyn till värdet när vi bedömer hur intensivt övriga riskfaktorer bör behandlas.</p>
+              <p><strong>Triglycerider:</strong> Triglycerider är en annan typ av fett i blodet. Ett förhöjt värde kan tyda på fler triglyceridrika partiklar och deras restpartiklar, som också kan bidra till åderförkalkning. Provet kompletterar LDL-kolesterol och apoB och hjälper oss att bedöma din blodfettsprofil.</p>
+              <p><strong>HbA1c:</strong> HbA1c, ibland kallat långtidsblodsocker, speglar den genomsnittliga blodsockernivån under de senaste två till tre månaderna. Det hjälper oss att upptäcka förhöjt blodsocker och bedöma om vidare utredning för diabetes behövs. Diabetes är en viktig riskfaktor för hjärt-kärlsjukdom.</p>
+              <p><strong>Blodtryck:</strong> Högt blodtryck belastar hjärtat och blodkärlen och ökar risken för bland annat hjärtinfarkt och stroke. Vi kontrollerar därför blodtrycket som en del av kartläggningen.</p>
+              <p>Vi väger samman resultaten med hjärtskanningen, din sjukdomshistoria och övriga riskfaktorer. Ett enskilt provvärde avgör inte hela bedömningen.</p>
+            </details>
             <details><summary>Vad är en skanning av hjärtat? <span>+</span></summary><p>Det är en röntgenundersökning av hjärtats kranskärl som visar om det finns kalkinlagringar – ett tecken på åderförkalkning. Undersökningen är enkel och snabb, görs med låg stråldos och bidrar med viktig information i vår bedömning.</p></details>
             <details><summary>Måste jag komma till Mölndal? <span>+</span></summary><p>Nej. Genomgången av dina provsvar kan ske i våra lokaler i Mölndal eller via videomöte. Du väljer det som passar dig bäst.</p></details>
             <details><summary>Behöver jag gå med i preventionsprogrammet? <span>+</span></summary><p>Vi behandlar inte i onödan. Om du har påvisbar åderförkalkning eller uppfyller våra andra fördefinierade behandlingskriterier så kommer vi erbjuda dig behandling. Om allt ser bra ut så kommer vi i regel inte rekommendera behandling till dig.</p><p>Även om du inte behöver behandling nu finns vi kvar. Vi håller kostnadsfritt reda på när det är dags för en ny undersökning och kontaktar dig då – vanligtvis efter 3–4 år. Påminnelsen är en gratis service. Vid nästa undersökning ser vi om allt fortfarande ser bra ut eller om du behöver förebyggande behandling.</p></details>
             <details><summary>Behöver alla göra en skanning av hjärtat? <span>+</span></summary><p>Behovet bedöms individuellt utifrån bland annat ålder och risk för hjärt-kärlsjukdom. Vi går igenom vad som passar dig under det första samtalet.</p></details>
             <details><summary>Måste jag ha symtom? <span>+</span></summary><p>Nej. Vivra arbetar med att bedöma och minska risk innan hjärt-kärlsjukdom ger symtom. Vid akuta bröstsmärtor eller andra akuta symtom ska du ringa 112.</p></details>
+          </div>
+        </div>
+      </section>
+      <section className="about-section" id="om-oss" aria-labelledby="about-title">
+        <div className="section-shell">
+          <div className="section-heading">
+            <div><p className="eyebrow">Om oss</p><h2 id="about-title">Teamet bakom Vivra</h2></div>
+            <p>Vi är forskare och läkare med expertis inom hjärt-kärlhälsa och en passion för prevention.</p>
+          </div>
+          <div className="team-cards">
+            <article className="team-card">
+              <div className="studio-portrait"><img className="studio-strip portrait-0" src="/vivra-team-natural.png" alt="Magnus Hiller" width={2048} height={683} /></div>
+              <h3>Magnus Hiller</h3><p>Kardiolog · VD</p>
+            </article>
+            <article className="team-card">
+              <div className="studio-portrait"><img className="studio-strip portrait-1" src="/vivra-team-natural.png" alt="Pär Björklund" width={2048} height={683} /></div>
+              <h3>Pär Björklund</h3><p>Läkare · Forskare</p>
+            </article>
+            <article className="team-card">
+              <div className="studio-portrait"><img className="studio-strip portrait-2" src="/vivra-team-natural.png" alt="Elias Björnson" width={2048} height={683} /></div>
+              <h3>Elias Björnson</h3><p>Forskare · Vetenskapligt ansvarig</p>
+            </article>
+            <article className="team-card">
+              <div className="studio-portrait"><img className="studio-strip portrait-3" src="/vivra-team-natural.png" alt="Carlo Pirazzi" width={2048} height={683} /></div>
+              <h3>Carlo Pirazzi</h3><p>Kardiolog · Lipidexpert</p>
+            </article>
           </div>
         </div>
       </section>
@@ -204,7 +239,7 @@ export default function App() {
             <address>GoCo Health Innovation City<br />Entreprenörsstråket 1c, 3 tr<br />431 53 Mölndal</address>
           </div>
         </div>
-        <div className="section-shell footer-bottom"><span>© 2026 Vivra Health</span><span>Vid akuta symtom, ring 112.</span></div>
+        <div className="section-shell footer-bottom"><span>© 2026 Vivra Health AB · Org.nr 559582-6503</span><span>Vid akuta symtom, ring 112.</span></div>
       </footer>
     </main>
   );
