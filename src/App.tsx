@@ -48,7 +48,7 @@ function RegistrationFallback() {
   }
   return (
     <details ref={details} className="registration-fallback" id="kontakt-alternativ">
-      <summary>Vill du hellre att vi ringer dig?</summary>
+      <summary>Vill du hellre att vi bara ringer dig?</summary>
       <div className="fallback-content">
         <h4>Bli uppringd av oss.</h4>
         <p>Lämna dina kontaktuppgifter så ringer vi dig och berättar mer. Detta är en begäran om återuppringning, inte en patientregistrering.</p>
@@ -124,9 +124,9 @@ export default function App() {
           <div className="steps-grid">
             <article className="step-card">
               <span className="step-number">Steg 1</span><h3>Registrera dig hos oss.</h3>
-              <p>Registrera dig med BankID och fyll i vårt korta hälsoformulär. Vi ringer upp dig, går igenom dina svar och berättar om nästa steg.</p>
+              <p>Registrera dig gratis med BankID och fyll i vårt korta hälsoformulär. Vi ringer upp dig, går igenom dina svar och berättar om nästa steg.</p>
               <a className="step-link" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
-              <a className="fallback-link" href="#kontakt-alternativ">Vill du hellre att vi ringer dig?</a>
+              <a className="fallback-link" href="#kontakt-alternativ">Vill du hellre att vi bara ringer dig?</a>
             </article>
             <article className="step-card featured-step">
               <span className="step-number">Steg 2</span><h3>Prover i din egen takt.</h3>
