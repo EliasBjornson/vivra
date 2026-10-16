@@ -369,3 +369,20 @@ main {
 
 .registration-fallback summary { color: #fff7e9; }
 .registration-fallback summary:focus-visible { outline-color: #fff7e9; }
+
+/* Clear callback alternative and a keyboard-accessible mobile section menu. */
+.fallback-link, .registration-fallback summary { color: #ffe5aa; font-size: 15px; font-weight: 600; line-height: 1.6; }
+.fallback-link:focus-visible, .registration-fallback summary:focus-visible { outline-color: #ffe5aa; }
+.mobile-menu-button { display: none; }
+@media (max-width: 1080px) {
+  .site-header { display: flex; flex-wrap: wrap; align-content: center; gap: 12px; height: 140px; padding: 12px 0; }
+  .mobile-menu-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin-left: auto; min-height: 44px; padding: 0 16px; border: 1px solid #ffffff60; border-radius: 999px; background: #ffffff0d; color: #fffaf6; font: inherit; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .mobile-menu-button span { font-size: 21px; line-height: 1; }
+  .mobile-menu-button:focus-visible, .nav-links a:focus-visible { outline: 2px solid #ffe5aa; outline-offset: 4px; }
+  .header-actions { width: 100%; justify-content: space-between; }
+  .hero-inner { padding-top: 140px; }
+  .nav-links { display: none; position: absolute; top: calc(100% + 8px); left: 0; right: 0; padding: 12px; border: 1px solid #ffffff40; border-radius: 18px; background: #642b24; box-shadow: 0 18px 40px #210b0a40; }
+  .nav-links.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+  .nav-links a { display: block; padding: 14px 16px; border-radius: 10px; color: #fffaf6; font-size: 16px; }
+  .nav-links a:hover { background: #ffffff12; }
+}

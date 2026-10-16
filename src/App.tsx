@@ -48,10 +48,10 @@ function RegistrationFallback() {
   }
   return (
     <details ref={details} className="registration-fallback" id="kontakt-alternativ">
-      <summary>Fungerar inte registreringen? Klicka här.</summary>
+      <summary>Vill du hellre att vi ringer dig?</summary>
       <div className="fallback-content">
-        <h4>Vi hjälper dig att komma igång.</h4>
-        <p>Lämna dina uppgifter så ringer vi upp dig kort därefter och hjälper dig med registreringen. Formuläret skickas till info@vivrahealth.se och skapar inte automatiskt ett patientkonto.</p>
+        <h4>Bli uppringd av oss.</h4>
+        <p>Lämna dina kontaktuppgifter så ringer vi dig och berättar mer. Detta är en begäran om återuppringning, inte en patientregistrering.</p>
         {status === "success" ? <p className="form-status" role="status">Tack! Dina uppgifter har skickats till Vivra. Vi ringer upp dig så snart vi kan och hjälper dig med nästa steg.</p> :
         <form className="callback-form" onSubmit={submit} aria-busy={status === "sending"}>
           <div className="callback-fields">
@@ -71,13 +71,21 @@ function RegistrationFallback() {
 }
 
 export default function App() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
+  function closeMenuOnEscape(event: React.KeyboardEvent) {
+    if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); }
+  }
   return (
     <main>
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Vivra, startsida"><LogoMark /><span className="brand-name">Vivra</span></a>
-        <nav className="nav-links" aria-label="Huvudmeny">
-          <a href="#sa-fungerar-det">Så fungerar det</a><a href="#priser">Priser</a><a href="#faq">Vanliga frågor</a><a href="#om-oss">Om oss</a>
+        <nav id="main-navigation" className={`nav-links${menuOpen ? " is-open" : ""}`} aria-label="Huvudmeny" onKeyDown={closeMenuOnEscape} onClick={() => setMenuOpen(false)}>
+          <a href="#sa-fungerar-det">Så fungerar det</a><a href="#formular">Kom igång</a><a href="#priser">Priser</a><a href="#faq">Vanliga frågor</a><a href="#om-oss">Om oss</a>
         </nav>
+        <button ref={menuButton} className="mobile-menu-button" type="button" aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen(!menuOpen)} onKeyDown={closeMenuOnEscape}>
+          <span aria-hidden="true">{menuOpen ? "×" : "☰"}</span> {menuOpen ? "Stäng" : "Meny"}
+        </button>
         <div className="header-actions">
           <a className="portal-button" href={PATIENT_PORTAL_URL}>Mina sidor</a>
           <a className="portal-button registration-button" href={REGISTRATION_URL}>Registrera dig hos oss</a>
@@ -88,7 +96,6 @@ export default function App() {
         <div className="hero-glow hero-glow-two" />
         <div className="hero-inner">
           <div className="hero-copy">
-            <p className="eyebrow light">Förebyggande hjärt-kärlvård</p>
             <h1>
               Hejdå
               <br />
@@ -113,14 +120,13 @@ export default function App() {
         <div className="section-shell">
           <div className="section-heading">
             <div><p className="eyebrow">Så fungerar det</p><h2>Tre steg till en tydligare bild av din hjärthälsa.</h2></div>
-            <p>Under pilotfasen vänder vi oss främst till dig i Göteborgsområdet. Registrera dig med BankID och fyll i vårt hälsoformulär. Vi ringer upp dig kort därefter och hjälper dig genom nästa steg.</p>
           </div>
           <div className="steps-grid">
             <article className="step-card">
               <span className="step-number">Steg 1</span><h3>Registrera dig hos oss.</h3>
-              <p>Identifiera dig med BankID och svara på några frågor om kön, ålder, familjehistorik och symtom. Vi ringer upp dig kort efter registreringen, välkomnar dig och förklarar hur blodprov och hjärtskanning går till. Tillsammans går vi igenom dina uppgifter och stämmer av att allt är klart inför eventuell remiss.</p>
+              <p>Registrera dig med BankID och fyll i vårt korta hälsoformulär. Vi ringer upp dig, går igenom dina svar och berättar om nästa steg.</p>
               <a className="step-link" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
-              <a className="fallback-link" href="#kontakt-alternativ">Fungerar inte registreringen? Klicka här.</a>
+              <a className="fallback-link" href="#kontakt-alternativ">Vill du hellre att vi ringer dig?</a>
             </article>
             <article className="step-card featured-step">
               <span className="step-number">Steg 2</span><h3>Prover i din egen takt.</h3>
@@ -140,12 +146,11 @@ export default function App() {
           <div className="contact-heading">
             <p className="eyebrow light">Välkommen som pilotpatient i Göteborgsområdet</p>
             <h2>Första steget?<br />Registrera dig.</h2>
-            <p>Vår förebyggande screening vänder sig till dig utan symtom på hjärt-kärlsjukdom. Börja med en registrering och ett kort hälsoformulär i vår patientportal.</p>
           </div>
           <div className="contact-card registration-card">
             <span className="contact-label">Din första kontakt</span>
             <h3>Kom igång med BankID.</h3>
-            <p>Identifiera dig och ange dina kontaktuppgifter. Svara sedan på frågor om kön, ålder, familjehistorik och symtom. Vi ringer upp dig kort därefter, går igenom dina svar och förklarar vad som händer härnäst. Innan vi skickar remisser stämmer vi av att allt är klart och att du känner dig trygg med nästa steg.</p>
+            <p>Registrera dig med BankID och fyll i ett kort hälsoformulär. Vi ringer upp dig och går igenom dina svar.</p>
             <a className="button button-dark registration-cta" href={REGISTRATION_URL}>Registrera dig hos oss <Arrow /></a>
             <p className="registration-note">Registreringen är kostnadsfri. Du väljer ingen besökstid och betalar inget i detta steg.</p>
             <RegistrationFallback />
