@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState, type FormEvent } from "react";
+import HeartSchool from "./HeartSchool";
 const Arrow = () => <span aria-hidden="true">→</span>;
 const REGISTRATION_URL = "https://vivrahealth.curoflow.se/visits?bt=6acf8138a36ea18b24f9ea46";
 const PATIENT_PORTAL_URL = "https://vivrahealth.curoflow.se/auth/login";
@@ -72,6 +73,19 @@ function RegistrationFallback() {
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [school, setSchool] = useState(window.location.hash === "#hjart-karlskolan");
+  useEffect(() => {
+    const navigate = () => {
+      const isSchool = window.location.hash === "#hjart-karlskolan";
+      setSchool(isSchool);
+      setMenuOpen(false);
+      if (isSchool) window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
+      else requestAnimationFrame(() => document.getElementById(window.location.hash.slice(1) || "top")?.scrollIntoView());
+    };
+    window.addEventListener("hashchange", navigate);
+    return () => window.removeEventListener("hashchange", navigate);
+  }, []);
+  useEffect(() => { document.title = school ? "Hjärt-kärlskolan | Vivra Health" : "Vivra Health – Förebyggande hjärt-kärlvård"; }, [school]);
   const menuButton = useRef<HTMLButtonElement>(null);
   function closeMenuOnEscape(event: React.KeyboardEvent) {
     if (event.key === "Escape") { setMenuOpen(false); menuButton.current?.focus(); }
@@ -81,7 +95,7 @@ export default function App() {
       <header className="site-header">
         <a className="brand" href="#top" aria-label="Vivra, startsida"><LogoMark /><span className="brand-name">Vivra</span></a>
         <nav id="main-navigation" className={`nav-links${menuOpen ? " is-open" : ""}`} aria-label="Huvudmeny" onKeyDown={closeMenuOnEscape} onClick={() => setMenuOpen(false)}>
-          <a href="#sa-fungerar-det">Så fungerar det</a><a href="#formular">Kom igång</a><a href="#priser">Priser</a><a href="#faq">Vanliga frågor</a><a href="#om-oss">Om oss</a>
+          <a href="#sa-fungerar-det">Så fungerar det</a><a href="#formular">Kom igång</a><a href="#priser">Priser</a><a href="#faq">Vanliga frågor</a><a href="#om-oss">Om oss</a><a href="#hjart-karlskolan" aria-current={school ? "page" : undefined}>Hjärt-kärlskolan</a>
         </nav>
         <button ref={menuButton} className="mobile-menu-button" type="button" aria-expanded={menuOpen} aria-controls="main-navigation" onClick={() => setMenuOpen(!menuOpen)} onKeyDown={closeMenuOnEscape}>
           <span aria-hidden="true">{menuOpen ? "×" : "☰"}</span> {menuOpen ? "Stäng" : "Meny"}
@@ -91,6 +105,7 @@ export default function App() {
           <a className="portal-button registration-button" href={REGISTRATION_URL}>Registrera dig hos oss</a>
         </div>
       </header>
+      {school ? <HeartSchool /> : <>
       <section className="hero" id="top">
         <div className="hero-glow hero-glow-one" />
         <div className="hero-glow hero-glow-two" />
@@ -231,6 +246,7 @@ export default function App() {
           </div>
         </div>
       </section>
+      </>}
       <footer className="pilot-footer">
         <div className="section-shell footer-grid">
           <div>
