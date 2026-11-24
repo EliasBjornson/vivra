@@ -77,6 +77,7 @@ function RegistrationFallback() {
 }
 export default function App() {
  const { t, language, setLanguage } = useLanguage();
+ const l = (sv: string, en: string) => language === "en" ? en : sv;
     const [menuOpen, setMenuOpen] = useState(false);
     const [school, setSchool] = useState(window.location.hash === "#hjart-karlskolan");
     useEffect(() => {
@@ -181,6 +182,7 @@ export default function App() {
       <section className="services-section" id="priser">
         <div className="section-shell">
           <div className="section-heading"><div><p className="eyebrow">{t("Priser")}</p><h2>{t("Kartlägg först.")}<br />{t("Förebygg över tid.")}</h2></div><p>{t("Efter kartläggningen bedömer vi tillsammans om du är aktuell för Vivras preventionsprogram.")}</p></div>
+          <p className="eyebrow" style={{marginBottom:"1.5rem",fontSize:"1rem"}}>{l("Introduktionserbjudande", "Introductory offer")}</p>
           <div className="service-grid">
             <article className="service-card start-card">
               <div className="service-card-head"><div><span className="service-tag">{t("En engångskostnad")}</span><h3>{t("Vivra Screening")}</h3></div><div className="price"><strong>3 290</strong><span>{t("kr")}</span></div></div>
@@ -204,7 +206,7 @@ export default function App() {
           <div className="faq-list">
             <details><summary>{t("Hur kommer jag igång? ")}<span>+</span></summary><p>{t("Klicka på ”Registrera dig hos oss”, identifiera dig med BankID och fyll i vårt korta hälsoformulär. Vi ringer upp dig kort efter registreringen för att välkomna dig, förklara undersökningarna och gå igenom dina uppgifter innan vi skickar eventuella remisser. När du är registrerad kan du logga in på ”Mina sidor”. Vi tar just nu emot pilotpatienter, främst i Göteborgsområdet.")}</p></details>
             <details><summary>{t("Hur bokar jag blodprov och skanning av hjärtat? ")}<span>+</span></summary><p>{t("Efter registreringen ringer vi upp dig och förklarar hur blodprov och hjärtskanning (hjärt-CT) går till. Vi går igenom dina uppgifter, svarar på dina frågor och stämmer av att allt är klart inför eventuell remiss. Efter läkarens bedömning skickar vi vid behov remisser och informerar om hur du går vidare. Du genomför blodprovet och skanningen av hjärtat i din egen takt.")}</p></details>
-            <details><summary>{t("Var finns vi? ")}<span>+</span></summary><p>{t("Under pilotfasen vänder vi oss främst till dig som bor i Göteborgsområdet. Hjärtskanningen görs hos Evidia Annedal i Göteborg. Blodprov lämnas genom SYNLAB och deras provtagningspartners; vi hjälper dig att hitta ett lämpligt provtagningsställe. Vår egen mottagning finns på GoCo Health Innovation City, Entreprenörsstråket 1c, 3 tr, i Mölndal. Genomgången av dina provsvar kan också ske via video.")}</p><p>{t("Vi planerar att snart utöka till Stockholm, Malmö och Uppsala, och hoppas därefter kunna erbjuda hjärtskanning på ännu fler orter. Blodprov kan redan lämnas på många platser runt om i Sverige. Hör gärna av dig om du är intresserad av Vivra på din ort.")}</p></details>
+            <details><summary>{t("Var finns vi? ")}<span>+</span></summary><p>{l("Under pilotfasen vänder vi oss främst till dig som bor i Göteborgsområdet. Hjärtskanningen görs hos Evidia Annedal i Göteborg. Blodprov lämnas genom SYNLAB och deras provtagningspartners; vi hjälper dig att hitta ett lämpligt provtagningsställe. Vår egen mottagning finns på Vivra c/o Atheart Clinic, GoCo Health Innovation City, Entreprenörsstråket 1c, i Mölndal. Genomgången av dina provsvar kan också ske via video.", "During the pilot phase, we mainly welcome people living in the Gothenburg area. Heart scans take place at Evidia Annedal in Gothenburg. Blood samples are taken through SYNLAB and its partners; we help you find a suitable location. Our clinic is at Vivra c/o Atheart Clinic, GoCo Health Innovation City, Entreprenörsstråket 1c, Mölndal. Your results can also be reviewed by video.")}</p><p>{t("Vi planerar att snart utöka till Stockholm, Malmö och Uppsala, och hoppas därefter kunna erbjuda hjärtskanning på ännu fler orter. Blodprov kan redan lämnas på många platser runt om i Sverige. Hör gärna av dig om du är intresserad av Vivra på din ort.")}</p></details>
             <details><summary>{t("Vilka prover och mätningar gör ni? ")}<span>+</span></summary>
               <p>{t("Vi mäter blodfetter och långtidsblodsocker med blodprov och kontrollerar ditt blodtryck. De ger olika pusselbitar som hjälper oss att bedöma din hjärt-kärlhälsa och välja förebyggande åtgärder som passar dig.")}</p>
               <p><strong>{t("LDL-kolesterol och apoB:")}</strong>{t(" LDL-kolesterol visar hur mycket kolesterol som finns i LDL-partiklarna. Dessa partiklar kan fastna i kärlväggen och bidra till åderförkalkning. Apolipoprotein B (apoB) ger ett mått på det totala antalet blodfettspartiklar som kan bidra till åderförkalkning. Tillsammans ger proverna en mer komplett bild än LDL-kolesterol ensamt och hjälper oss att sätta relevanta behandlingsmål.")}</p>
@@ -249,6 +251,24 @@ export default function App() {
         </div>
       </section>
       </>}
+
+      <section id="hitta-hit" className="process-section" aria-labelledby="directions-title">
+        <div className="section-shell">
+          <div className="section-heading"><div><p className="eyebrow">{l("Besök oss", "Visit us")}</p><h2 id="directions-title">{l("Hitta till mottagningen", "Find our clinic")}</h2></div></div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit, minmax(min(100%, 300px), 1fr))",gap:"2rem",alignItems:"start"}}>
+            <div style={{fontSize:"1rem",lineHeight:1.8}}>
+              <h3>Vivra c/o Atheart Clinic</h3>
+              <address style={{fontStyle:"normal"}}>GoCo Health Innovation City<br/>Entreprenörsstråket 1c<br/>431 53 Mölndal</address>
+              <p>{l("Ta ingången till vänster om Olssons Mat och följ skyltarna till Atheart, två trappor upp.", "Use the entrance to the left of Olssons Mat and follow the signs to Atheart, two flights of stairs up.")}</p>
+              <h3>{l("Parkering", "Parking")}</h3>
+              <p>{l("Det finns flera parkeringsalternativ i området. Vi rekommenderar till exempel EasyPark-parkeringen vid Kärragatan 6.", "There are several parking options nearby. One option we recommend is the EasyPark car park at Kärragatan 6.")}</p>
+              <a className="button button-dark" href="https://www.google.com/maps/dir/?api=1&destination=Entrepren%C3%B6rsstr%C3%A5ket%201C%2C%20M%C3%B6lndal" target="_blank" rel="noopener noreferrer">{l("Visa vägbeskrivning", "Get directions")}</a>
+              <p><a href="https://www.google.com/maps/search/?api=1&query=K%C3%A4rragatan%206%2C%20M%C3%B6lndal" target="_blank" rel="noopener noreferrer" style={{textDecoration:"underline"}}>{l("Visa parkeringen på karta", "View parking on the map")}</a></p>
+            </div>
+            <iframe title={l("Karta till Vivras mottagning i Mölndal", "Map to Vivra's clinic in Mölndal")} src={`https://www.google.com/maps?q=Entrepren%C3%B6rsstr%C3%A5ket%201C%2C%20M%C3%B6lndal&output=embed&hl=${language}`} width="100%" height="380" loading="lazy" referrerPolicy="no-referrer-when-downgrade" style={{border:0,borderRadius:"20px",display:"block"}}/>
+          </div>
+        </div>
+      </section>
       <footer className="pilot-footer">
         <div className="section-shell footer-grid">
           <div>
@@ -258,7 +278,8 @@ export default function App() {
           <div className="footer-contact">
             <span>{t("Kontakt & besöksadress")}</span>
             <a href="mailto:info@vivrahealth.se">{t("info@vivrahealth.se")}</a>
-            <address>{t("GoCo Health Innovation City")}<br />{t("Entreprenörsstråket 1c, 3 tr")}<br />{t("431 53 Mölndal")}</address>
+            <address>Vivra c/o Atheart Clinic<br/>{t("GoCo Health Innovation City")}<br />Entreprenörsstråket 1c<br />{t("431 53 Mölndal")}</address>
+            <a href="#hitta-hit" style={{textDecoration:"underline"}}>{l("Karta och vägbeskrivning", "Map and directions")}</a>
           </div>
         </div>
         <div className="section-shell footer-bottom"><span>{t("© 2026 Vivra Health AB · Org.nr 559582-6503")}</span><span>{t("Vid akuta symtom, ring 112.")}</span></div>
