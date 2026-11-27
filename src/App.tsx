@@ -260,8 +260,8 @@ export default function App() {
               <h3>Vivra c/o Atheart Clinic</h3>
               <address style={{fontStyle:"normal"}}>GoCo Health Innovation City<br/>Entreprenörsstråket 1c<br/>431 53 Mölndal</address>
               <p>{l("Ta ingången till vänster om Olssons Mat och följ skyltarna till Atheart, två trappor upp.", "Use the entrance to the left of Olssons Mat and follow the signs to Atheart, two flights of stairs up.")}</p>
-              <h3>{l("Parkering", "Parking")}</h3>
-              <p>{l("Det finns flera parkeringsalternativ i området. Vi rekommenderar till exempel EasyPark-parkeringen vid Kärragatan 6.", "There are several parking options nearby. One option we recommend is the EasyPark car park at Kärragatan 6.")}</p>
+              <h3 style={{fontSize:"1.375rem",fontWeight:700,lineHeight:1.3,marginTop:"1.5rem",marginBottom:"0.5rem"}}>{l("Parkering", "Parking")}</h3>
+              <p>{l("Vi rekommenderar EasyPark-parkeringen P2 vid Kärragatan 6.", "We recommend the EasyPark P2 car park at Kärragatan 6.")}</p>
               <a className="button button-dark" href="https://www.google.com/maps/dir/?api=1&destination=Entrepren%C3%B6rsstr%C3%A5ket%201C%2C%20M%C3%B6lndal" target="_blank" rel="noopener noreferrer">{l("Visa vägbeskrivning", "Get directions")}</a>
               <p><a href="https://www.google.com/maps/search/?api=1&query=K%C3%A4rragatan%206%2C%20M%C3%B6lndal" target="_blank" rel="noopener noreferrer" style={{textDecoration:"underline"}}>{l("Visa parkeringen på karta", "View parking on the map")}</a></p>
             </div>
